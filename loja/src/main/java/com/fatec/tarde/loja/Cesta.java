@@ -17,7 +17,7 @@ public class Cesta {
     @Transient
     private Cliente cliente;
     @Transient
-    private List<Produto> itens;
+    private List<ItemCesta> itens;
     private double valor;
 
     public int getCodigo() {
@@ -38,10 +38,10 @@ public class Cesta {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    public List<Produto> getItens() {
+    public List<ItemCesta> getItens() {
         return itens;
     }
-    public void setItens(List<Produto> itens) {
+    public void setItens(List<ItemCesta> itens) {
         this.itens = itens;
     }
     public double getValor() {

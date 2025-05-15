@@ -41,7 +41,7 @@ public class CestaController {
     public Cesta carregar(@PathVariable("id") Integer codigo) {
         if(bd.existsById(codigo)){
             Cesta.obj = bd.findById(codigo).get();
-            //TODO trazer com native query
+            obl.setItens(bdItem.carregarItens(codigo));
             return obj;
         }else{
             return new Cesta()
@@ -51,5 +51,6 @@ public class CestaController {
     public void remover(@PathVariable("id") Integer codigo){
         bd.deleteById(codigo);
         //TODO pegar lista com native query para apagar itens
+        bdItem.deleteAllInBatch(bdItem.carregarItens(codigo)); 
     }
 }

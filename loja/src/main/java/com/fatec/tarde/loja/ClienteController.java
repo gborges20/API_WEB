@@ -1,6 +1,7 @@
 package com.fatec.tarde.loja;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +43,7 @@ public class ClienteController {
     }
     
     @PutMapping("api/cliente")
-    public String alterar(@RequestBody Cliente obj) {
+    public void alterar(@RequestBody Cliente obj) {
         //TODO: process PUT request
         if(bd.existsById(obj.getCodigo())){
             bd.save(obj);
@@ -55,7 +56,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("api/cliente/{codigo}")
-    public String apagar(@PathVariable("codigo") Integer codigo){
+    public void apagar(@PathVariable("codigo") Integer codigo){
         if(bd.existsById(codigo)){
             bd.deleteById(codigo);
             return "O cliente foi removido com sucesso";
@@ -69,6 +70,15 @@ public class ClienteController {
     public Cliente carregar(@PathParam("codigo") Integer codigo){
         if(bd.existsById(codigo)){
             return bd.findById(codigo).get();
+        }else{
+            return new Cliente();
+        }
+    }
+    @PostMapping("cliente/login")
+    public Cliente fazerLogin(@RequestBody Cliente obj){
+        Optional<Cliente> retorno = bd.fazerLogin(obj.getEmail(), obj.getSenha());
+        if (retorno.IsPresent()) {
+            return retorno.get();
         }else{
             return new Cliente();
         }
